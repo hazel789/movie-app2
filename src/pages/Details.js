@@ -1,24 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import { useLocation } from "react-router-dom";
+import { useLocation} from "react-router-dom";
+import './details.css'
+import ReactPlayer from 'react-player/lazy'
 
-const Details = () => {
+
+import Recommendations from '../components/Recommendations';
+
+const Details = (props) => {
 
     const [movieDetails, setMovieDetails] = useState({})
-    const [fetchingReco, setFetchingReco] = useState(false);
+
     const [movieRecommendations, setMovieRecommendations] = useState({})
+    const [videos, setVideos] = useState({})
   
     const location = useLocation();
     let movieId = location.pathname
     let movieID = movieId.replace('/', '')
-    
-    console.log(movieID);
 
 
     const fetchMovieDetails = async (url) => {
 
         try {
             const res = await fetch(url);
-            console.log(res)
+
             if (res.status !== 200) {
                 throw new Error('Something went wrong.');
             }
@@ -38,9 +42,11 @@ const Details = () => {
 
         const url = (`https://api.themoviedb.org/3/movie/${movieID}?api_key=31a40805676bdd5d1f2295449e6165c1&language=en-US`)
 
-        fetchMovieDetails(url);
+        if (!props.fetchingReco) {
+            fetchMovieDetails(url);
+        }
             
-    }, [])
+    }, [props.fetchingReco])
 
 
     const fetchMovieRecommendations = async (url) => {
@@ -63,45 +69,120 @@ const Details = () => {
         console.log('done loading');
     }
 
-    let movieRecos = (<div></div>);
-
     useEffect(() => {
 
         const url = (`https://api.themoviedb.org/3/movie/${movieID}/recommendations?api_key=31a40805676bdd5d1f2295449e6165c1&language=en-US&page=1`)
 
-        fetchMovieRecommendations(url);
+        if (!props.fetchingReco) {
+            fetchMovieRecommendations(url);
+        }
             
-        setFetchingReco(true);
+        props.setFetchingReco(true);
 
-    }, [])
+    }, [props.fetchingReco])
 
 
-    // if (fetchingReco) {
-    //     console.log(movieRecommendations)
-    //     movieRecos = movieRecommendations.results.map((movie) => {
-    //         return (
-    //             <>
-    //                 <h5>{movie.original_title}</h5>
-    //                 <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${movie.poster_path}`} alt=''></img>
-    //             </>
-    //         )
-    //     })
-    // }
+    const fetchVideos = async (url) => {
+
+        try {
+            const res = await fetch(url);
+            console.log(res)
+            if (res.status !== 200) {
+                throw new Error('Something went wrong.');
+            }
+
+            const videoData = await res.json();
+
+            setVideos(() => {
+                return {
+                    key: videoData.results[0]?.key
+                }
+            })
+        
+        } catch (err) {
+            console.log(err);
+        }
+
+        console.log('done loading');
+    }
+    useEffect(() => {
+
+        const url = (`https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=31a40805676bdd5d1f2295449e6165c1&language=en-US`)
+
+        if (!props.fetchingReco) {
+            fetchVideos(url);
+        }
+
+    }, [props.fetchingReco])
+
+    const handleFavourite = () => {
+
+         const UseCompare = (arrayA, arrayB) => {
+            if (arrayA === arrayB) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        props.setFavourites((prevFavourites) => {
+
+            if (prevFavourites?.length === 0) {
+                return [
+                    ...prevFavourites, movieDetails
+                ]
+                
+            } else {
+                for (const element of Object.entries(prevFavourites)) {
+
+                    console.log(element[1]);
+                    console.log(movieDetails);
+
+
+                    if (UseCompare(JSON.stringify(movieDetails.id), JSON.stringify(element[1].id))) {
+                        console.log("Hello the comparison works and it returns nothing because it's the same")
+                        return
+                    } else {
+                        console.log("Hello the comparison is working and this returns a unique new favourite")
+                         return [
+                            ...prevFavourites, movieDetails
+                        ]
+                        
+                    }
+                }
+            }
+        })
+        
+    }
 
 
 return (
-    <div>
-        <h1>{movieDetails.original_title}</h1>
-        <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${movieDetails.poster_path}`} alt=''></img>
-        <div className="description">
-            <h4>Release Date: {movieDetails.release_date}</h4>
-            <h5>Overview: <br/> {movieDetails.overview}</h5>
+    <>
+        
+        <div id = "movieDetails" style={{
+            backgroundImage: `url("https://www.themoviedb.org/t/p/original/${movieDetails.backdrop_path}")`
+        }}>
+            <ReactPlayer className="video" url={`https://youtube.com/watch?v=${videos.key}`} />
+            <div className="description">
+                <h2>{movieDetails.original_title}</h2>
+                <h4><b>Release Date:</b> {movieDetails.release_date}<span /><b>|<span />Runtime: </b>{movieDetails.runtime} mins</h4>
+                <div>
+                    <h5><b>User Rating:</b></h5>
+                    <button class='spin circle'>{movieDetails.vote_average}</button>
+                    <span/><h5><b>Bookmark:</b></h5>
+                    <button class="spin circle heart" onClick={handleFavourite}><i className="fa fa-heart" /></button>
+                </div>
+                <h4><b>Overview: </b><br />{movieDetails.overview}</h4>
+                <div className="genres">
+                    <h4 id="genre-word"><b>Genres:</b></h4>
+                    {movieDetails.genres?.map((genre) => {
+                        return <span className="genre-keyword">{genre.name}</span>;
+                    })}
+                </div>
+            </div>
         </div>
-        <div className="recommendations">
-            <h2>Recommendations:</h2>
-            {movieRecos}
-        </div>
-    </div>
+        <Recommendations fetchingReco={props.fetchingReco} setFetchingReco={props.setFetchingReco} movieRecommendations={movieRecommendations}></Recommendations>
+    </>
     )
 }
 

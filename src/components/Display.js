@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
-import {Route, Link} from 'react-router-dom';
-import { useParams } from 'react-router-dom'
-import Details from '../pages/Details';
+import {Link} from 'react-router-dom';
+
+import './display.css'
 
 const Display = (props) => {
 
-    // let popular = (<div></div>)
+    const handleReco = () => {
+        props.setFetchingReco(false);
+    }
 
-    // if (props.searchInput === '') {
-
-        
-    // }
-
-
-    let moviesDisplay=(<div></div>)
+    let moviesDisplay = (<div></div>)
+    let searchTitle = ''
 
     if (!props.fetching && props.movieData.length !== 0) {
 
-        console.log(props.movieData);
-
+        searchTitle = <h4 id="search-title">Search Results</h4>
+        
         moviesDisplay = props.movieData.results.map((movies, index) => {
             return (
                 <div className="card">
-                    <Link to={{
+                    <Link onClick={handleReco} className="link" to={{
                         pathname: `/${movies.id}`,
                         }}>
                         <div key={index} id={movies.id}>{movies.original_title}</div>
@@ -34,10 +31,13 @@ const Display = (props) => {
 
     }
 
-        return (
-            <div>
-                {/* {popular} */}
-                {moviesDisplay}
+    return (
+            
+        <div className="container">
+            {searchTitle}
+            <div className="container2">
+            {moviesDisplay}
+        </div>
             </div>
         )
 }

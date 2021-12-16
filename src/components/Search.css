@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;700&family=Roboto+Mono:wght@300&family=Roboto:wght@300;400&family=Rubik:wght@700&display=swap");
+
+.searchBar {
+  width: 500px;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+#searchButton {
+  position: relative;
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: rgb(34, 34, 34); /*for compatibility with older browsers*/
+  background-image: linear-gradient(rgb(34, 34, 34), rgb(83, 83, 83));
+  border-radius: 10px;
+
+  /* text styles */
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+#searchButton:after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(100% - 4px);
+  height: 50%;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.2)
+  );
+}
+
+#searchButton:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform 0.3s;
+}
+
+input:focus {
+  border: 1px solid rgb(76, 146, 140);
+}
+
+.header {
+  background-image: url("https://wallpapercave.com/wp/sRh8sKQ.jpg");
+  opacity: 0.8;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: static;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin: 0 0 30px 0;
+  padding: none;
+  border: 0;
+}
+
+.header-title {
+  font-size: 80px;
+  text-align: center;
+  font-family: "Rubik", sans-serif;
+  text-align: center;
+  background: -webkit-linear-gradient(#eee, rgb(114, 114, 114));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 20px 20px 0 20px;
+}
+
+.header-title2 {
+  font-size: 30px;
+  text-align: center;
+  font-family: "Rubik", sans-serif;
+  text-align: center;
+  background: -webkit-linear-gradient(#eee, rgb(189, 189, 189));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 20px 0;
+}
+
+.header form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

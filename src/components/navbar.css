@@ -1,0 +1,57 @@
+.navbar {
+  height: 3rem;
+  background-image: linear-gradient(black, rgba(46, 46, 46, 0.89));
+}
+
+.navbar nav {
+  height: 100%;
+}
+
+.navbar ul {
+  height: 100%;
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0 45px;
+  align-items: center;
+  justify-content: left;
+  font-weight: 700;
+}
+
+.navbar li {
+  margin: 0 1rem;
+  width: 10rem;
+}
+
+.navbar a {
+  color: rgb(175, 174, 174);
+  text-decoration: none;
+}
+
+.navbar :hover {
+  color: whitesmoke;
+  padding-bottom: 0.25rem;
+}
+
+.navbar h4 {
+  display: inline-block;
+  position: absolute;
+  font-weight: 700;
+  font-size: 0.8em;
+  right: 30px;
+  color: rgb(146, 146, 146);
+}
+
+#favouritesButton {
+  color: rgb(175, 174, 174);
+  background-color: rgb(175, 174, 174, 0);
+  font-weight: 700;
+  position: absolute;
+  right: 200px;
+  font-size: 1em;
+}
+
+#favouritesButton:hover {
+  cursor: pointer;
+  color: #0eb7da;
+}
