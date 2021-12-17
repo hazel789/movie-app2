@@ -1,20 +1,44 @@
 .favourites-list {
   color: white;
+  background-image: linear-gradient(black, rgba(46, 46, 46, 0.89));
   display: none;
-  flex-direction: column;
-  align-items: right;
+  flex-direction: row;
+  align-items: left;
+  z-index: 1000;
+  position: absolute;
+  top: 3rem;
+  right: 150px;
+  border-radius: 5px;
 }
 
 ul {
   list-style: none;
-  margin: 10px;
+  margin: 5px auto;
+  text-align: center;
 }
 
 li {
-  margin: 5px;
+  margin: 8px auto;
+  text-align: center;
 }
 
 .favouriteItem {
+  display: flex;
+  flex-direction: row;
   color: white;
+  margin: 10px 30px 10px 0px;
   text-decoration: none;
+}
+
+.thumbnail {
+  display: flex;
+  align-items: left;
+  flex-direction: row;
+  width: 50px;
+}
+
+.favouriteItem {
+  display: flex;
+  align-items: right;
+  flex-direction: row;
 }

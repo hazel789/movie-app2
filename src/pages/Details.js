@@ -117,44 +117,31 @@ const Details = (props) => {
 
     const handleFavourite = () => {
 
-         const UseCompare = (arrayA, arrayB) => {
-            if (arrayA === arrayB) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         props.setFavourites((prevFavourites) => {
 
             if (prevFavourites?.length === 0) {
                 return [
-                    ...prevFavourites, movieDetails
+                ...prevFavourites, movieDetails
                 ]
                 
             } else {
-                for (const element of Object.entries(prevFavourites)) {
+                if (prevFavourites.find(movie => movie.id === movieDetails.id)) {
 
-                    console.log(element[1]);
-                    console.log(movieDetails);
+                    console.log(prevFavourites);
 
+                    return prevFavourites;
 
-                    if (UseCompare(JSON.stringify(movieDetails.id), JSON.stringify(element[1].id))) {
-                        console.log("Hello the comparison works and it returns nothing because it's the same")
-                        return
-                    } else {
-                        console.log("Hello the comparison is working and this returns a unique new favourite")
-                         return [
-                            ...prevFavourites, movieDetails
-                        ]
-                        
-                    }
+                } else {
+
+                    return [
+                    ...prevFavourites, movieDetails
+                    ]   
+                }
                 }
             }
-        })
+        )
         
     }
-
 
 return (
     <>

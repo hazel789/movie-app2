@@ -19,7 +19,8 @@ const Favourites = (props) => {
                 <Link className="favouriteItem" onClick={handleReco} to={{
                     pathname: `/${element.id}`,
                 }}>
-                    {element.original_title}
+                    <img className="thumbnail" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${element.poster_path}`} alt=''></img>
+                    <span className="favourites_title"> {element.original_title}</span>
                 </Link>
             </li>
         )

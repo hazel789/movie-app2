@@ -7,7 +7,7 @@ import 'slick-carousel/slick/slick-theme.css'
 
   const sliderSettings = {
     slidesToShow: 6,
-    slidesToScroll: 3,
+    slidesToScroll: 2,
     infinite: true,
     autoplay: true,
     autoplaySpeed: 2000
@@ -18,10 +18,14 @@ const Recommendations = (props) => {
     const handleReco = () => {
         props.setFetchingReco(false);
     }
-
+    let s = 'No Recommendations'
+    if (props.movieRecommendations.results?.length != 0) {
+        console.log(props.movieRecommendations)
+        s = 'Recommendations'
+    }
     return (
         <>
-            <h3>Recommendations:</h3>
+            <h3>{s}</h3>
             <Slider {...sliderSettings}>
                 {props.fetchingReco && props.movieRecommendations.results?.map((movie) => {
                     return (
